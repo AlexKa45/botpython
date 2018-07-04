@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import config
 import os
+import flask
 from flask import Flask, request
 import telebot
 import requests
