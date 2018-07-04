@@ -2,7 +2,6 @@
 import config
 import os
 from flask import Flask, request
-import logging
 import telebot
 import requests
 import openpyxl
