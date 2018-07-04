@@ -7,7 +7,7 @@ from flask import Flask, request
 TOKEN = '619217456:AAH3t5-puxFnsjg5AzMFpim0zKo-SCKPsMQ'
 bot = telebot.TeleBot(TOKEN)
 
-@bot.message_handler(commands=['start'])
+@bot.message_handler(content_types=['text'])
 def start(message):
     bot.send_message(message.chat.id,message.text)
         
