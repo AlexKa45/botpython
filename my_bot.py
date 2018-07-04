@@ -63,111 +63,107 @@ markup6.row(config.rab1,config.rab2)
 markup6.row(config.rab3)
 markup7.row(config.pot1,config.pot2)
 
+@bot.message_handler(commands=['start'])    
+def start(message): 
+if(b):
+    data['chat_id'] = message.chat.id
+    bot.send_message(message.chat.id, config.text)   
+    fio()
 
-def main():
-
-    @bot.message_handler(commands=['start'])    
-    def start(message): 
-        if(b):
-            data['chat_id'] = message.chat.id
-            bot.send_message(message.chat.id, config.text)   
-            fio()
-            
-    def fio():
-        bot.send_message(data['chat_id'], "Введите ФИО(в формате: Фамилия Имя Отчество)", reply_markup=mark)
+def fio():
+bot.send_message(data['chat_id'], "Введите ФИО(в формате: Фамилия Имя Отчество)", reply_markup=mark)
 
 
-    @bot.message_handler(commands=['menu']) 
-    def menu(message):
-        if(i):
-            bot.send_message(data['chat_id'], 'Главное Меню', reply_markup=markup1)
+@bot.message_handler(commands=['menu']) 
+def menu(message):
+if(i):
+    bot.send_message(data['chat_id'], 'Главное Меню', reply_markup=markup1)
 
-    @bot.message_handler(regexp="\d{9}")
-    def prev_reg(message):
-        if(i):
-            if(edit(message.text)):
-                bot.send_message(message.chat.id, "Данные успешно сохранены",reply_markup=markup)
+@bot.message_handler(regexp="\d{9}")
+def prev_reg(message):
+if(i):
+    if(edit(message.text)):
+        bot.send_message(message.chat.id, "Данные успешно сохранены",reply_markup=markup)
 
-    @bot.message_handler(regexp="\d{11}")    
-    def number(message): 
-        if(b):
-            data['num'] = message.text
-            message = data['name']+' ,являясь '+ data['stat'] +' подал заявку на регистрацию. Номер ' + data['num']
-            s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail)
-            bot.send_message(data['chat_id'], 'Ваша заявка принята. В скором времени вам перезвонит администратор.',reply_markup=markup2)
-  
-            
-    @bot.message_handler(regexp="\d{7}")    
-    def number(message): 
-        if(b):
-            data['num'] = message.text        
-            sign_up()
+@bot.message_handler(regexp="\d{11}")    
+def number(message): 
+if(b):
+    data['num'] = message.text
+    message = data['name']+' ,являясь '+ data['stat'] +' подал заявку на регистрацию. Номер ' + data['num']
+    s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail)
+    bot.send_message(data['chat_id'], 'Ваша заявка принята. В скором времени вам перезвонит администратор.',reply_markup=markup2)
 
-    @bot.message_handler(regexp="\d\d/\d\d/\d{4}")    
-    def number(message): 
-        if(i):
-            data['data'] = message.text
-            bot.send_message(message.chat.id, "Введите показание(-я) счётчика(-ов).")
+@bot.message_handler(regexp="\d{7}")    
+def number(message): 
+if(b):
+    data['num'] = message.text        
+    sign_up()
 
-
-    @bot.message_handler(regexp="\d{1}")
-    def prev_reg(message):
-        if(b):
-            if(message.text == 0):
-                reg()
-        if(i):
-            data['kolvo'] = message.text
-            bot.send_message(message.chat.id, "Введите дату проверки счётчика(ДД/ММ/ГГГГ)")
+@bot.message_handler(regexp="\d\d/\d\d/\d{4}")    
+def number(message): 
+if(i):
+    data['data'] = message.text
+    bot.send_message(message.chat.id, "Введите показание(-я) счётчика(-ов).")
 
 
-    @bot.message_handler(regexp="\w{2,10}\s\w{2,15}\s\w{2,20}")
-    def num1(message):
-        if(b):
-            data['name'] = message.text                
-            bot.send_message(message.chat.id,"Введите номер по договору(если вы хотите зарегистрироваться введите 0)", reply_markup=mark)
-        if(i):
-            answer(message)
+@bot.message_handler(regexp="\d{1}")
+def prev_reg(message):
+if(b):
+    if(message.text == 0):
+        reg()
+if(i):
+    data['kolvo'] = message.text
+    bot.send_message(message.chat.id, "Введите дату проверки счётчика(ДД/ММ/ГГГГ)")
 
 
-    @bot.message_handler(content_types=['text'])
-    def answer(message):
-        if(i): 
-            
-            if(message.text == config.case1):
-                print(1)
-            if(message.text == config.case2):
-                print(cas2())
-                pdf = './pdf/' + str(cas2()) + '.pdf'
-                f = open(pdf,'rb')
-                bot.send_document(data['chat_id'], f,reply_markup=markup)
-            if(message.text == config.case3):
-                bot.send_message(data['chat_id'], "Выберите тип счётчика", reply_markup=markup4)
-            if(message.text == config.case4):
-                bot.send_message(data['chat_id'], "Какого сотрудника вы хотите вызвать?", reply_markup=markup6)
+@bot.message_handler(regexp="\w{2,10}\s\w{2,15}\s\w{2,20}")
+def num1(message):
+if(b):
+    data['name'] = message.text                
+    bot.send_message(message.chat.id,"Введите номер по договору(если вы хотите зарегистрироваться введите 0)", reply_markup=mark)
+if(i):
+    answer(message)
 
-            if((message.text == config.sch1)or(message.text == config.sch2)or(message.text == config.sch3)or(message.text == config.sch4)):
-                data['schet'] = message.text
-                bot.send_message(data['chat_id'], "Сколько счётчиков?", reply_markup=markup5)
 
-            if((message.text == config.rab1)or(message.text == config.rab2)or(message.text == config.rab3)):
-                data['type'] = message.text
-                bot.send_message(data['chat_id'], "Какая у вас потребность?", reply_markup=markup7)
+@bot.message_handler(content_types=['text'])
+def answer(message):
+if(i): 
 
-            if((message.text == config.pot1) or (message.text == config.pot2)):
-                data['pot'] = message.text
-                if(send()):
-                    bot.send_message(data['chat_id'], 'Ваша заявка принята. Мы вам перезвоним для подтверждения вызова.',reply_markup=markup)
+    if(message.text == config.case1):
+        print(1)
+    if(message.text == config.case2):
+        print(cas2())
+        pdf = './pdf/' + str(cas2()) + '.pdf'
+        f = open(pdf,'rb')
+        bot.send_document(data['chat_id'], f,reply_markup=markup)
+    if(message.text == config.case3):
+        bot.send_message(data['chat_id'], "Выберите тип счётчика", reply_markup=markup4)
+    if(message.text == config.case4):
+        bot.send_message(data['chat_id'], "Какого сотрудника вы хотите вызвать?", reply_markup=markup6)
 
-        if(b):
-            if(message.text == config.reg1) or (message.text == config.reg2):
-                data['stat'] = message.text                                       
-                bot.send_message(data['chat_id'], "Введите свой телефонный номер в формате 7XXXXXXXXXX.", reply_markup=mark)
+    if((message.text == config.sch1)or(message.text == config.sch2)or(message.text == config.sch3)or(message.text == config.sch4)):
+        data['schet'] = message.text
+        bot.send_message(data['chat_id'], "Сколько счётчиков?", reply_markup=markup5)
 
-            if(message.text == 'Повторить ввод'):
-                fio()
+    if((message.text == config.rab1)or(message.text == config.rab2)or(message.text == config.rab3)):
+        data['type'] = message.text
+        bot.send_message(data['chat_id'], "Какая у вас потребность?", reply_markup=markup7)
 
-            if(message.text == 'Пройти регистрацию'):
-                reg()
+    if((message.text == config.pot1) or (message.text == config.pot2)):
+        data['pot'] = message.text
+        if(send()):
+            bot.send_message(data['chat_id'], 'Ваша заявка принята. Мы вам перезвоним для подтверждения вызова.',reply_markup=markup)
+
+if(b):
+    if(message.text == config.reg1) or (message.text == config.reg2):
+        data['stat'] = message.text                                       
+        bot.send_message(data['chat_id'], "Введите свой телефонный номер в формате 7XXXXXXXXXX.", reply_markup=mark)
+
+    if(message.text == 'Повторить ввод'):
+        fio()
+
+    if(message.text == 'Пройти регистрацию'):
+        reg()
 
 
 def send():
@@ -256,4 +252,23 @@ def sign_up():
 
 if __name__ == '__main__':
     main()
-    bot.polling(none_stop=True)
+    if "HEROKU" in list(os.environ.keys()):
+            logger = telebot.logger
+            telebot.logger.setLevel(logging.INFO)
+
+            server = Flask(__name__)
+            @server.route("/bot", methods=['POST'])
+            def getMessage():
+                bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+                return "!", 200
+            @server.route("/")
+            def webhook():
+                bot.remove_webhook()
+                bot.set_webhook(url="https://min-gallows.herokuapp.com/bot") # этот url нужно заменить на url вашего Хероку приложения
+                return "?", 200
+            server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
+        else:
+    # если переменной окружения HEROKU нету, значит это запуск с машины разработчика.  
+    # Удаляем вебхук на всякий случай, и запускаем с обычным поллингом.
+            bot.remove_webhook()
+            bot.polling(none_stop=True)
