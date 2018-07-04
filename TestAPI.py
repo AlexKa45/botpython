@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 import config
 import telebot
 import requests
@@ -6,7 +6,6 @@ import openpyxl
 from openpyxl import load_workbook
 from telebot import types
 import datetime
-import urllib3
 
 global b
 global i
