@@ -12,9 +12,8 @@ def start(message):
     bot.send_message(message.chat.id,message.text)
         
 if "HEROKU" in list(os.environ.keys()):
-    logger = telebot.logger
-    
     server = Flask(__name__)
+    
     @server.route("/bot", methods=['POST'])
     def getMessage():
         bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
@@ -23,7 +22,7 @@ if "HEROKU" in list(os.environ.keys()):
     @server.route("/")
     def webhook():
         bot.remove_webhook()
-        bot.set_webhook(url="https://demo45.herokuapp.com/") # этот url нужно заменить на url вашего Хероку приложения
+        bot.set_webhook(url="https://0.0.0.0:80) # этот url нужно заменить на url вашего Хероку приложения
         return "?", 200
     
     server.run(host="0.0.0.0", port=os.environ.get('PORT', 80))
