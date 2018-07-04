@@ -156,7 +156,7 @@ def main():
             if((message.text == config.pot1) or (message.text == config.pot2)):
                 data['pot'] = message.text
                 if(send()):
-                    bot.send_message(data['chat_id'], 'Ваша заявка принята. Мы вам перезвоним для подтверждения вызова.')
+                    bot.send_message(data['chat_id'], 'Ваша заявка принята. Мы вам перезвоним для подтверждения вызова.',reply_markup=markup)
 
         if(b):
             if(message.text == config.reg1) or (message.text == config.reg2):
@@ -182,7 +182,7 @@ def send():
     RB['h' + last_num ]= datetime.date.today()
     RB['i' + last_num ]= datetime.time()
     wb.save('test.xlsx')
-    message = 'Поступила '+data['pot']+' заявка на '+data['type']+' по адресу: '+data['adres']+', ' + data['home']+'. Номер для подтверждения вызова : '+data['numbr']
+    message = 'Поступила ' + str(data['pot'])+' заявка на '+ str(data['type'])+' по адресу: '+ str(data['adres'])+', ' +  str(data['home'])+'. Номер для подтверждения вызова : '+ str(data['numbr'])
     s = requests.get(config.URL + message+'&head='+ config.head2 +'&mail='+config.mail)
     return True
     
