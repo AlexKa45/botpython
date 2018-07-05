@@ -7,6 +7,11 @@ fromaddr = "kasperskiialex@gmail.com"
 mypass = "Zoasler2909"
 toaddr = "platonovaleks2909@gmail.com"
 
+msg = MIMEMultipart()
+msg['From'] = fromaddr
+msg['To'] = toaddr
+msg['Subject'] = config.head1
+
 def send(message):
   msg.attach(MIMEText(message, 'plain'))
   server = smtplib.SMTP('smtp.gmail.com', 587)
