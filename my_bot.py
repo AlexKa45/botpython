@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import config
+import send_me
 import os
 from flask import Flask, request
 import telebot
@@ -9,9 +10,6 @@ from openpyxl import load_workbook
 from telebot import types
 import datetime
 import urllib3
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
 
 global b
 global i
@@ -48,12 +46,6 @@ data = {'name':'Name',          #ФИО
         'numbr': 0,             #Номер телефона №2
         'type':0,               #Тип рабочего
         'pot':0}                #Потребность: Личная или Общая
-
-#$FIO = $_GET['fio'];
-#$num = $_GET['num'];
-#$stat = $_GET['stat'];
-
-#$message = "";
 
 bot = telebot.TeleBot(config.token)
 markup = types.ReplyKeyboardMarkup()
@@ -104,14 +96,7 @@ def number(message):
         if(b):
             data['num'] = message.text
             message = str(data['name'])+' ,являясь '+ str(data['stat']) +' подал заявку на регистрацию. Номер ' + str(data['num'])
-            msg['Subject'] = config.head1
-            msg.attach(MIMEText(message, 'plain'))
-            server = smtplib.SMTP('smtp.gmail.com', 587)
-            server.starttls()
-            server.login(fromaddr, mypass)
-            text = msg.as_string()
-            server.sendmail(fromaddr, toaddr, text)
-            server.quit()
+            send_me.send(message)
             #s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail)
             bot.send_message(data['chat_id'], 'Ваша заявка принята. В скором времени вам перезвонит администратор.',reply_markup=markup2)
 
@@ -200,15 +185,8 @@ def send():
     RB['h' + last_num ]= datetime.date.today()
     RB['i' + last_num ]= datetime.time()
     wb.save('test.xlsx')
-    msg['Subject'] = config.head2
     message = 'Поступила ' + str(data['pot'])+' заявка на '+ str(data['type'])+' по адресу: '+ str(data['adres'])+', ' +  str(data['home'])+'. Номер для подтверждения вызова : '+ str(data['numbr'])
-    msg.attach(MIMEText(message, 'plain'))
-    server = smtplib.SMTP('smtp.gmail.com', 587)
-    server.starttls()
-    server.login(fromaddr, mypass)
-    text = msg.as_string()
-    server.sendmail(fromaddr, toaddr, text)
-    server.quit()
+    send_me.send(message)    
     #s = requests.get(config.URL + message+'&head='+ config.head2 +'&mail='+config.mail)
     return True
     
