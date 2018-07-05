@@ -14,13 +14,6 @@ import urllib3
 global b
 global i
 global last_num
-fromaddr = "kasperskiialex@gmail.com"
-mypass = "Zoasler2909"
-toaddr = "platonovaleks2909@gmail.com"
-
-msg = MIMEMultipart()
-msg['From'] = fromaddr
-msg['To'] = toaddr
 
 server = Flask(__name__)
 
