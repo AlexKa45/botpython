@@ -20,3 +20,5 @@ def send(message):
   text = msg.as_string()
   server.sendmail(fromaddr, toaddr, text)
   server.quit()
+
+send('Hello')
