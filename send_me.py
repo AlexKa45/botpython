@@ -1,24 +1,6 @@
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-import config
+import requests
 
-fromaddr = "kasperskiialex@gmail.com"
-mypass = "Zoasler2909"
-toaddr = "platonovaleks2909@gmail.com"
+url='http://i-tek.000webhostapp.com/bot_mail.php?message=Hello&mail=kasperskiialex@gmail.com&head=Test'
 
-msg = MIMEMultipart()
-msg['From'] = fromaddr
-msg['To'] = toaddr
-msg['Subject'] = config.head1
+s = requests.get(url)
 
-def send(message):
-  msg.attach(MIMEText(message, 'plain'))
-  server = smtplib.SMTP('smtp.gmail.com', 587)
-  server.starttls()
-  server.login(fromaddr, mypass)
-  text = msg.as_string()
-  server.sendmail(fromaddr, toaddr, text)
-  server.quit()
-
-send('Hello')
