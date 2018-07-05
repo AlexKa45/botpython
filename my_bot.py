@@ -9,10 +9,20 @@ from openpyxl import load_workbook
 from telebot import types
 import datetime
 import urllib3
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 global b
 global i
 global last_num
+fromaddr = "kasperskiialex@gmail.com"
+mypass = "Zoasler2909"
+toaddr = "platonovaleks2909@gmail.com"
+
+msg = MIMEMultipart()
+msg['From'] = fromaddr
+msg['To'] = toaddr
 
 server = Flask(__name__)
 
@@ -93,8 +103,16 @@ def prev_reg(message):
 def number(message): 
         if(b):
             data['num'] = message.text
-            message = data['name']+' ,являясь '+ data['stat'] +' подал заявку на регистрацию. Номер ' + data['num']
-            s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail)
+            message = str(data['name'])+' ,являясь '+ str(data['stat']) +' подал заявку на регистрацию. Номер ' + str(data['num'])
+            msg['Subject'] = config.head1
+            msg.attach(MIMEText(message, 'plain'))
+            server = smtplib.SMTP('smtp.gmail.com', 587)
+            server.starttls()
+            server.login(fromaddr, mypass)
+            text = msg.as_string()
+            server.sendmail(fromaddr, toaddr, text)
+            server.quit()
+            #s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail)
             bot.send_message(data['chat_id'], 'Ваша заявка принята. В скором времени вам перезвонит администратор.',reply_markup=markup2)
 
 @bot.message_handler(regexp="\d{7}")    
@@ -182,7 +200,15 @@ def send():
     RB['h' + last_num ]= datetime.date.today()
     RB['i' + last_num ]= datetime.time()
     wb.save('test.xlsx')
-    #message = 'Поступила ' + str(data['pot'])+' заявка на '+ str(data['type'])+' по адресу: '+ str(data['adres'])+', ' +  str(data['home'])+'. Номер для подтверждения вызова : '+ str(data['numbr'])
+    msg['Subject'] = config.head2
+    message = 'Поступила ' + str(data['pot'])+' заявка на '+ str(data['type'])+' по адресу: '+ str(data['adres'])+', ' +  str(data['home'])+'. Номер для подтверждения вызова : '+ str(data['numbr'])
+    msg.attach(MIMEText(message, 'plain'))
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(fromaddr, mypass)
+    text = msg.as_string()
+    server.sendmail(fromaddr, toaddr, text)
+    server.quit()
     #s = requests.get(config.URL + message+'&head='+ config.head2 +'&mail='+config.mail)
     return True
     
