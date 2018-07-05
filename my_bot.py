@@ -71,6 +71,7 @@ markup7.row(config.pot1,config.pot2)
 def start(message): 
         url='http://i-tek.000webhostapp.com/bot_mail.php?message=Hello&mail=kasperskiialex@gmail.com&head=Test'
         s = requests.get(url)
+        print(s,'\nStart')
         if(i):
             data['chat_id'] = message.chat.id
             bot.send_message(message.chat.id, config.text)   
