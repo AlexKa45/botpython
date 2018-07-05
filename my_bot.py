@@ -69,10 +69,7 @@ markup7.row(config.pot1,config.pot2)
 
 @bot.message_handler(commands=['start'])    
 def start(message): 
-        url='http://i-tek.000webhostapp.com/bot_mail.php?message=Hello&mail=kasperskiialex@gmail.com&head=Test'
-        s = requests.get(url)
-        print(s.json(),'\nStart')
-        if(i):
+        if(b):
             data['chat_id'] = message.chat.id
             bot.send_message(message.chat.id, config.text)   
             fio()
@@ -98,7 +95,7 @@ def number(message):
             data['num'] = message.text
             message = str(data['name'])+' ,являясь '+ str(data['stat']) +' подал заявку на регистрацию. Номер ' + str(data['num']) 
             #send_me.send(message)
-            #s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail,headers=headers)
+            s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail)
             bot.send_message(data['chat_id'], 'Ваша заявка принята. В скором времени вам перезвонит администратор.',reply_markup=markup2)
 
 @bot.message_handler(regexp="\d{7}")    
@@ -188,7 +185,7 @@ def send():
     wb.save('test.xlsx')
     message = 'Поступила ' + str(data['pot'])+' заявка на '+ str(data['type'])+' по адресу: '+ str(data['adres'])+', ' +  str(data['home'])+'. Номер для подтверждения вызова : '+ str(data['numbr'])
     #send_me.send(message)
-    #s = requests.get(config.URL + message+'&head='+ config.head2 +'&mail='+config.mail,headers=headers)
+    s = requests.get(config.URL + message+'&head='+ config.head2 +'&mail='+config.mail)
     return True
     
 
