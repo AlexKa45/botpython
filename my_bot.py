@@ -21,7 +21,7 @@ i = False
 b = True
 
 headers = {
-    'User-Agent': 'My User Agent 1.0',
+    'User-Agent': 'Mozilla/5.0',
     'From': 'kasperskiialex@gmail.com'
 }
 
