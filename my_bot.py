@@ -93,9 +93,8 @@ def prev_reg(message):
 def number(message): 
         if(b):
             data['num'] = message.text
-            message = str(data['name'])+' ,являясь '+ str(data['stat']) +' подал заявку на регистрацию. Номер ' + str(data['num'])
-              
-            s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail,headers=headers)
+            message = str(data['name'])+' ,являясь '+ str(data['stat']) +' подал заявку на регистрацию. Номер ' + str(data['num']) 
+            #s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail,headers=headers)
             bot.send_message(data['chat_id'], 'Ваша заявка принята. В скором времени вам перезвонит администратор.',reply_markup=markup2)
 
 @bot.message_handler(regexp="\d{7}")    
@@ -184,7 +183,7 @@ def send():
     RB['i' + last_num ]= datetime.time()
     wb.save('test.xlsx')
     message = 'Поступила ' + str(data['pot'])+' заявка на '+ str(data['type'])+' по адресу: '+ str(data['adres'])+', ' +  str(data['home'])+'. Номер для подтверждения вызова : '+ str(data['numbr'])
-    s = requests.get(config.URL + message+'&head='+ config.head2 +'&mail='+config.mail,headers=headers)
+    #s = requests.get(config.URL + message+'&head='+ config.head2 +'&mail='+config.mail,headers=headers)
     return True
     
 
