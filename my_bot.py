@@ -95,8 +95,8 @@ def number(message):
             data['num'] = message.text
             message = str(data['name'])+' ,являясь '+ str(data['stat']) +' подал заявку на регистрацию. Номер ' + str(data['num']) 
             #send_me.send(message)
-            s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail)
             bot.send_message(data['chat_id'], 'Ваша заявка принята. В скором времени вам перезвонит администратор.',reply_markup=markup2)
+            s = requests.get(config.URL + message+'&head='+ config.head1 +'&mail='+config.mail)
 
 @bot.message_handler(regexp="\d{7}")    
 def number(message): 
@@ -114,6 +114,7 @@ def number(message):
 @bot.message_handler(regexp="\d{1}")
 def prev_reg(message):
         if(b):
+            print('000')
             if(message.text == 0):
                 reg()
         if(i):
@@ -237,6 +238,7 @@ def error1():
     bot.send_message(data['chat_id'],"Такого номера нет в базе данных дома. Проверьте правильность введённых данных или пройдите регистрацию.",reply_markup=markup2)
 
 def reg():
+    print('Reg')
     bot.send_message(data['chat_id'],"Регистрация.\nВы являетесь собственником или сожителем?",reply_markup=markup3)
 
 def sign_up():
