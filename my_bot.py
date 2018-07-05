@@ -253,7 +253,6 @@ def sign_up():
             data['numbr'] = ID.cell(row = I, column = 5).value
             markup.row('/menu') 
             bot.send_message(data['chat_id'], 'Добро Пожаловать!!!',reply_markup=markup)
-            main()
             return 0
     error1()
             
